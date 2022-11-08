@@ -15,18 +15,20 @@
 
 # Admission criteria
 
-- The `goit-react-hw-02-feedback`.
+- The `The goit-react-hw-04-feedback`.
 - When submitting homework, there are two links: to the source files and the
   working pages of each assignment on `GitHub Pages`.
 - There are no errors or warnings in the console when you run the code for the
   assignment.
-- There is a separate file for each component in the `src/components` folder.
-- The `propTypes` are described for the components. Everything that a component
-  expects in the form of props is passed to it when it is called.
-- JS code is clean and clear, using `Prettier`.
-- Styling is done by `CSS modules` or `Styled Components`.
+- For each component has a separate folder with a React-component file and
+  styles.
+- The `propTypes` are described for the components.
+- Component names are clear, descriptive.
 
-## 1 - Feedback Widget.
+**_Refactor the "Feedback Widget" task code from the second module using
+React-hooks._**
+
+## Previous task - Feedback Widget.
 
 Like most companies, Expresso Cafe collects reviews from its customers. Your
 task is to create an application to collect statistics. There are only three
