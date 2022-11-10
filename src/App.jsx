@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Container } from './components/base/Container.styled';
 import { FeedbackOptoins } from './components/FeedbackOptoins/FeedbackOptoins';
 import { Statistics } from './components/Statistics/Statistics';
@@ -11,14 +11,6 @@ export const App = () => {
     neutral: 0,
     bad: 0,
   });
-  const total = useRef(0);
-  const positivePercentage = useRef(0);
-
-  useEffect(() => {
-    const { good, neutral, bad } = feedback;
-    total.current = good + neutral + bad;
-    positivePercentage.current = parseInt((good / total.current) * 100);
-  }, [feedback]);
 
   const handleFeedback = type => {
     setFeedback(state => ({
@@ -27,18 +19,27 @@ export const App = () => {
     }));
   };
 
+  const countTotalFeedback = () => {
+    const { good, neutral, bad } = feedback;
+    return good + neutral + bad;
+  };
+
+  const countPositiveFeedbackPercentage = () => {
+    const { good } = feedback;
+    return parseInt((good * 100) / countTotalFeedback()) || 0;
+  };
+
+  const positivePercentage = countPositiveFeedbackPercentage();
+  const total = countTotalFeedback();
+
   //  == Use of individual useState ==
   // const [good, setGood] = useState(0);
   // const [neutral, setNeutral] = useState(0);
   // const [bad, setBad] = useState(0);
-  // const total = useRef(0);
-  // const positivePercentage = useRef(0);
   // const options = ['good', 'neutral', 'bad'];
 
-  // useEffect(() => {
-  //   total.current = good + neutral + bad;
-  //   positivePercentage.current = parseInt((good / total.current) * 100);
-  // }, [good, neutral, bad]);
+  // const positivePercentage = countPositiveFeedbackPercentage();
+  // const total = countTotalFeedback();
 
   // const handleFeedback = type => {
   //   switch (type) {
@@ -59,6 +60,14 @@ export const App = () => {
   //   }
   // };
 
+  // const countTotalFeedback = () => {
+  //   return good + neutral + bad;
+  // };
+
+  // const countPositiveFeedbackPercentage = () => {
+  //   return parseInt((good * 100) / countTotalFeedback()) || 0;
+  // };
+
   return (
     <Container>
       <FeedbackOptoins
@@ -66,13 +75,13 @@ export const App = () => {
         onLeaveFeedback={handleFeedback}
       />
 
-      {total.current !== 0 ? (
+      {total !== 0 ? (
         <Statistics
           good={feedback.good}
           neutral={feedback.neutral}
           bad={feedback.bad}
-          total={total.current}
-          positivePercentage={positivePercentage.current}
+          total={total}
+          positivePercentage={positivePercentage}
         />
       ) : (
         <Notification message="There is no feedback" />
